@@ -66,6 +66,7 @@
 // })
 
 
+
 import React, {useState} from 'react';
 import type {JSX, PropsWithChildren} from 'react';
 import {
@@ -74,8 +75,10 @@ import {
   View,
   Image,
   ImageSourcePropType,
-  Pressable
+  Pressable,
+  Vibration
 } from 'react-native';
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import DiceOne from '../assets/One.png'
 import DiceTwo from '../assets/Two.png'
@@ -90,10 +93,10 @@ type DiceProps = PropsWithChildren<{
 
 const options = {
   enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false
+  ignoreAndroidSystemSettings: true
 };
 
-const Dice = ({imageUrl}: DiceProps): JSX.Element => {
+const Dice = ({imageUrl}: DiceProps):JSX.Element => {
   return (
     <View>
       <Image style={styles.diceImage} source={imageUrl} />
@@ -132,6 +135,8 @@ function App(): JSX.Element {
         break;
     }
 
+    ReactNativeHapticFeedback.trigger("impactLight", options);
+        Vibration.vibrate(100); // vibrate for 100ms
   }
 
   return (
@@ -155,6 +160,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFF2F2',
   },
   diceContainer: {
     margin: 12,
